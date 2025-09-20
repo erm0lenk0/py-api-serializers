@@ -28,8 +28,12 @@ class CinemaHallSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    genres = serializers.StringRelatedField(many=True)
-    actors = serializers.StringRelatedField(many=True)
+    genres = serializers.PrimaryKeyRelatedField(
+        queryset=Genre.objects.all(), many=True
+    )
+    actors = serializers.PrimaryKeyRelatedField(
+        queryset=Actor.objects.all(), many=True
+    )
 
     class Meta:
         model = Movie
@@ -52,6 +56,8 @@ class MovieSessionSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "show_time",
+            "movie",
+            "cinema_hall",
         )
 
 
